@@ -383,3 +383,11 @@
  .category-card{min-height:0;padding:23px}
  .closing-row{align-items:flex-start;gap:20px}
 }
+
+/* Accessible polish: keep the existing Kitlune palette and improve dark-mode clarity. */
+:root[data-theme=dark] .brand img,:root[data-theme=dark] .footer-brand img{content:url('/assets/images/logo-dark.svg')}
+:root[data-theme=dark] input::placeholder,:root[data-theme=dark] textarea::placeholder{color:#B8B8C2;opacity:1}
+:root[data-theme=dark] select,:root[data-theme=dark] option{color:var(--text);background:var(--surface)}
+:root[data-theme=dark] .nav>a,:root[data-theme=dark] .footer-col a,:root[data-theme=dark] .footer-bottom,:root[data-theme=dark] .tool-workspace small,:root[data-theme=dark] .prose small{color:#C4C4CC}
+:root[data-theme=dark] .icon-btn,:root[data-theme=dark] input,:root[data-theme=dark] textarea,:root[data-theme=dark] select{border-color:#73737D}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
