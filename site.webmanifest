@@ -1,0 +1,13 @@
+{
+  "name": "Kitlune",
+  "short_name": "Kitlune",
+  "description": "Free tools that run in your browser.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAFAF8",
+  "theme_color": "#4F46E5",
+  "icons": [
+    { "src": "/assets/images/favicon-32.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/assets/images/apple-touch-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
