@@ -430,7 +430,10 @@
 @media(prefers-reduced-motion:reduce){.calc-results:not([hidden]){animation:none}}
 
 /* Ensure the complete Kitlune wordmark remains legible in dark theme. */
-:root[data-theme="dark"] .brand img,
-:root[data-theme="dark"] .footer-brand img{content:url("/assets/images/logo-dark.svg");}
+
 :root[data-theme="dark"] .header{background:var(--bg);border-bottom-color:var(--border);}
 :root[data-theme="dark"] .footer{background:var(--surface);border-top-color:var(--border);}
+
+/* Robust logo contrast in dark mode on all page headers and footers. */
+:root[data-theme="dark"] .brand img,:root[data-theme="dark"] .footer-brand img{content:url("/assets/images/logo-dark.svg?v=20261010f");filter:none!important;opacity:1!important;visibility:visible!important}
+.brand img,.footer-brand img{opacity:1;visibility:visible;filter:none}
