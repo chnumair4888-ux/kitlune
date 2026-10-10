@@ -44,3 +44,39 @@ body{background:#f7f8f5;color:var(--pi)}.header{background:rgba(250,251,248,.92)
 :root[data-theme=dark] .category-card p,:root[data-theme=dark] .benefits p,:root[data-theme=dark] .privacy-note{color:#c4c4cc}
 :root[data-theme=dark] .why-section,:root[data-theme=dark] .trust-strip-section{background:#151815;border-color:#343b34}
 @media(max-width:760px){.premium-hero h1{font-size:clamp(46px,10.8vw,60px);line-height:1.04}.premium-hero .lead{font-size:16px;line-height:1.8}.premium-search{min-height:64px}.premium-search input{font-size:13px}.premium-search .btn{font-size:12px;padding:13px 12px}.premium-tool-card{min-height:0;padding:19px}.premium-tool-card h3{font-size:19px}.premium-tool-card p{font-size:14px}.premium-tool-card .tool-overline{font-size:10px}.premium-card-bottom{font-size:12px}.premium-tools-section{padding:52px 0}.premium-section-top h2{font-size:clamp(30px,8vw,37px)}.premium-proof span{font-size:12px}}
+
+
+/* Ensure the homepage's fixed-color premium components stay readable in dark mode. */
+:root[data-theme=dark] .premium-hero-copy .eyebrow,
+:root[data-theme=dark] .premium-section-top .eyebrow,
+:root[data-theme=dark] .premium-proof span,
+:root[data-theme=dark] .library-note,
+:root[data-theme=dark] .category-card p,
+:root[data-theme=dark] .benefits p,
+:root[data-theme=dark] .privacy-note,
+:root[data-theme=dark] .trust-strip small{color:#d0d5cf}
+:root[data-theme=dark] .premium-tool-controls .filter{background:#191d19;border-color:#454d45;color:#e4e7e2}
+:root[data-theme=dark] .premium-tool-controls .filter:hover{background:#252d24;color:#fff}
+:root[data-theme=dark] .premium-tool-controls .filter.active{background:#30442a;border-color:#648653;color:#f0ffe5}
+:root[data-theme=dark] .premium-tool-card .tool-overline{color:#c1d8b3}
+:root[data-theme=dark] .premium-card-bottom{color:#e1e7df}
+:root[data-theme=dark] .category-card h3,
+:root[data-theme=dark] .benefits h3,
+:root[data-theme=dark] .trust-strip strong,
+:root[data-theme=dark] .why-heading h2{color:#f4f4f5}
+:root[data-theme=dark] .closing{background:#171a17;border-color:#343b34}
+:root[data-theme=dark] .closing h2,
+:root[data-theme=dark] .closing p{color:#f4f4f5}
+:root[data-theme=dark] .footer{background:#111312;border-color:#343b34}
+:root[data-theme=dark] .footer :where(h2,h3,strong,b){color:#f4f4f5}
+:root[data-theme=dark] .footer :where(p,a,small){color:#cbd1ca}
+:root[data-theme=dark] .premium-search .btn{background:#b9e98c;color:#17231c}
+:root[data-theme=dark] .premium-search .btn span{color:#17231c}
+@media(max-width:760px){
+  .premium-hero h1{font-size:clamp(48px,11.5vw,62px)}
+  .premium-hero .lead{font-size:16px}
+  .premium-search input{font-size:15px}
+  .premium-search .btn{font-size:13px}
+  .premium-tool-card h3{font-size:20px}
+  .premium-tool-card p{font-size:15px}
+}
