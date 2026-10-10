@@ -17,7 +17,7 @@ async function authorize(request,env){
   if(String(user.email).trim().toLowerCase()!==allowed)return {response:fail('This account is not allowed.',403)};
   return {user};
 }
-const QUERY=`query StudioAnalytics($zoneTag:string!,$start:Date!,$end:Date!,$startTime:Time!,$endTime:Time!){viewer{zones(filter:{zoneTag:$zoneTag}){daily:httpRequests1dGroups(limit:1000,filter:{date_geq:$start,date_leq:$end},orderBy:[date_ASC]){dimensions{date}sum{requests pageViews}uniq{uniques}}countries:httpRequestsAdaptiveGroups(limit:100,filter:{datetime_geq:$startTime,datetime_lt:$endTime},orderBy:[count_DESC]){dimensions{clientCountryName}count}pages:httpRequestsAdaptiveGroups(limit:100,filter:{datetime_geq:$startTime,datetime_lt:$endTime},orderBy:[count_DESC]){dimensions{clientRequestPath}count}}}}`;
+const QUERY=`query StudioAnalytics($zoneTag:string!,$start:Date!,$end:Date!,$startTime:Time!,$endTime:Time!){viewer{zones(filter:{zoneTag:$zoneTag}){daily:httpRequests1dGroups(limit:1000,filter:{date_geq:$start,date_leq:$end},orderBy:[date_ASC]){dimensions{date}sum{requests pageViews visits}uniq{uniques}}countries:httpRequestsAdaptiveGroups(limit:100,filter:{datetime_geq:$startTime,datetime_lt:$endTime},orderBy:[count_DESC]){dimensions{clientCountryName}count}pages:httpRequestsAdaptiveGroups(limit:100,filter:{datetime_geq:$startTime,datetime_lt:$endTime},orderBy:[count_DESC]){dimensions{clientRequestPath}count}}}}`;
 export async function onRequestGet({request,env}) {
   const url=new URL(request.url);
   if(url.pathname==='/studio/config')return json({supabaseUrl:env.SUPABASE_URL||'',supabaseAnonKey:env.SUPABASE_ANON_KEY||''});
@@ -33,7 +33,7 @@ export async function onRequestGet({request,env}) {
   if(body.errors?.length||!body.data?.viewer?.zones?.[0]){return json({error:'Analytics query failed',details:(body.errors||[]).map(e=>e.message||'Unknown GraphQL error')},502);}
   const zone=body.data.viewer.zones[0],daily=zone.daily||[],byDate=new Map(daily.map(x=>[x.dimensions.date,x]));
   const today=new Date();today.setUTCHours(0,0,0,0);const periods={};
-  for(const [name,days] of Object.entries({today:0,'7d':6,'30d':29})){let requests=0,pageViews=0,dailyUniqueTotal=0;for(let i=0;i<=days;i++){const d=new Date(today);d.setUTCDate(d.getUTCDate()-i);const row=byDate.get(date(d));if(row){requests+=Number(row.sum?.requests||0);pageViews+=Number(row.sum?.pageViews||0);dailyUniqueTotal+=Number(row.uniq?.uniques||0)}}periods[name]={requests,pageViews,dailyUniqueTotal}}
+  for(const [name,days] of Object.entries({today:0,'7d':6,'30d':29})){let requests=0,pageViews=0,visits=0,dailyUniqueTotal=0;for(let i=0;i<=days;i++){const d=new Date(today);d.setUTCDate(d.getUTCDate()-i);const row=byDate.get(date(d));if(row){requests+=Number(row.sum?.requests||0);pageViews+=Number(row.sum?.pageViews||0);visits+=Number(row.sum?.visits||0);dailyUniqueTotal+=Number(row.uniq?.uniques||0)}}periods[name]={requests,pageViews,visits,dailyUniqueTotal}}
   const aggregate=(rows,key)=>{const map=new Map();for(const row of rows||[]){const name=row.dimensions?.[key]||'Unknown';map.set(name,(map.get(name)||0)+Number(row.count||0))}return [...map].map(([name,requests])=>({name,requests})).sort((a,b)=>b.requests-a.requests)};
   return json({periods,countries:aggregate(zone.countries,'clientCountryName').slice(0,15).map(x=>({country:x.name,requests:x.requests})),pages:aggregate(zone.pages,'clientRequestPath').slice(0,20).map(x=>({path:x.name,requests:x.requests})),generatedAt:new Date().toISOString()});
 }
