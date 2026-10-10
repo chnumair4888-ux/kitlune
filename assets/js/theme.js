@@ -9,6 +9,7 @@
   function setTheme(value) {
     const theme = value === 'dark' ? 'dark' : 'light';
     root.dataset.theme = theme;
+    document.querySelectorAll('.brand img, .footer-brand img').forEach(img => { img.src = theme === 'dark' ? '/assets/images/logo-dark.svg' : '/assets/images/logo.svg'; });
     if (meta) meta.content = theme === 'dark' ? '#0F0F10' : '#FAFAF8';
     if (button) { const next = theme === 'dark' ? 'light' : 'dark'; button.setAttribute('aria-label', `Switch to ${next} mode`); button.title = `Switch to ${next} mode`; }
   }
