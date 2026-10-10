@@ -1,0 +1,15 @@
+{
+  "id": "/studio/",
+  "name": "Kitlune Studio",
+  "short_name": "Studio",
+  "description": "Private Kitlune site dashboard",
+  "start_url": "/studio/",
+  "scope": "/studio/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#10101c",
+  "theme_color": "#17162b",
+  "icons": [
+    { "src": "/studio/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
