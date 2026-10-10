@@ -410,3 +410,12 @@
 .tool-guide summary{font-weight:600;cursor:pointer;color:var(--text)}
 .tool-guide details p{margin:10px 0 0}
 @media(max-width:600px){.breadcrumbs{padding-top:13px;font-size:.74rem}.tool-guide{padding-top:24px;padding-bottom:42px}}
+
+/* Quiet, consistent interaction polish across the existing interface. */
+:where(.tool-card,.category-card,.benefits article,.tool-workspace,.tool-tip,.result-stat,.result-feature){transition:transform 180ms ease,box-shadow 180ms ease,border-color 180ms ease}
+:where(.tool-card,.category-card,.benefits article):hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(24,24,27,.09)}
+:where(.btn,.icon-btn){transition:transform 140ms ease,box-shadow 180ms ease,background-color 180ms ease,border-color 180ms ease}
+.btn:active,.icon-btn:active{transform:translateY(1px) scale(.99)}
+:where(.upload-zone,#upload-zone,#pdf-upload-zone):is(.dragover,.is-dragover){border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 12%,transparent)}
+:where(.tool-card,.category-card,.benefits article):focus-within{outline:2px solid var(--accent);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){:where(.tool-card,.category-card,.benefits article,.tool-workspace,.tool-tip,.result-stat,.result-feature,.btn,.icon-btn){transition:none!important}.tool-card:hover,.category-card:hover,.benefits article:hover{transform:none!important}}
