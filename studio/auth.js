@@ -1,0 +1,16 @@
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.0';
+const gate=document.getElementById('auth-gate'),form=document.getElementById('login-form'),email=document.getElementById('login-email'),password=document.getElementById('login-password'),error=document.getElementById('auth-error'),submit=document.getElementById('login-submit'),google=document.getElementById('google-login'),logout=document.getElementById('logout-button');
+function message(text){error.textContent=text||''}
+function showGate(){document.body.classList.add('auth-lock');gate.style.display='grid';logout.style.display='none'}
+function showApp(){document.body.classList.remove('auth-lock');gate.style.display='none';logout.style.display='block'}
+async function main(){
+ let cfg;try{const r=await fetch('/studio/config',{cache:'no-store'});cfg=await r.json();if(!r.ok||!cfg.supabaseUrl||!cfg.supabaseAnonKey)throw new Error(cfg.error||'Supabase configuration is missing.')}catch(e){message('Setup needed: '+e.message);return}
+ const supabase=createClient(cfg.supabaseUrl,cfg.supabaseAnonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+ async function verifyAndOpen(session){if(!session?.access_token){showGate();return false}try{const r=await fetch('/studio/api',{headers:{Authorization:'Bearer '+session.access_token,Accept:'application/json'},cache:'no-store'});if(r.status===403){await supabase.auth.signOut();showGate();message('This account is not authorized for Kitlune Studio.');return false}if(r.status===401){showGate();message('Your session expired. Please sign in again.');return false}if(!r.ok){const data=await r.json().catch(()=>({}));showGate();message(data.error||'Could not verify account. Check server secrets.');return false}showApp();window.setStudioAccessToken(session.access_token);return true}catch{showGate();message('Could not verify your session. Please check your connection.');return false}}
+ form.addEventListener('submit',async e=>{e.preventDefault();message('');submit.disabled=true;submit.textContent='Signing in…';try{const {data,error:err}=await supabase.auth.signInWithPassword({email:email.value.trim(),password:password.value});if(err)throw err;await verifyAndOpen(data.session)}catch(e){message(e.message||'Sign-in failed.')}finally{submit.disabled=false;submit.textContent='Sign in with email'}});
+ google.addEventListener('click',async()=>{message('');google.disabled=true;try{const {error:err}=await supabase.auth.signInWithOAuth({provider:'google',options:{redirectTo:window.location.origin+'/studio/'}});if(err)throw err}catch(e){message(e.message||'Google sign-in failed.');google.disabled=false}});
+ logout.addEventListener('click',async()=>{await supabase.auth.signOut();window.setStudioAccessToken(null);showGate();message('You have signed out.')});
+ const {data:{session}}=await supabase.auth.getSession();if(session)await verifyAndOpen(session);else showGate();
+ supabase.auth.onAuthStateChange((_event,session)=>{if(session)verifyAndOpen(session);else{window.setStudioAccessToken(null);showGate()}});
+}
+main();
