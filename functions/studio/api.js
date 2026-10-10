@@ -39,4 +39,4 @@ export async function onRequestGet({request,env}) {
   return json({periods,countries:aggregate(zone.countries,'clientCountryName').slice(0,15).map(x=>({country:x.name,requests:x.requests})),pages:aggregate(zone.pages,'clientRequestPath').slice(0,20).map(x=>({path:x.name,requests:x.requests})),generatedAt:new Date().toISOString()});
 }
 export async function onRequestPost({request,env}){const auth=await authorize(request,env);if(auth.response)return auth.response;return fail('Method not allowed.',405)}
-export async function onRequest({request,env}){if(request.method==='OPTIONS')return new Response(null,{status:204,headers:{'cache-control':'no-store'}});if(request.method!=='GET'&&request.method!=='POST')return fail('Method not allowed.',405);return request.method==='GET'?onRequestGet({request,env}):onRequestPost({request,env})}
+export async function onRequest({request,env}){if(request.method!=='GET'&&request.method!=='POST')return fail('Method not allowed.',405);return request.method==='GET'?onRequestGet({request,env}):onRequestPost({request,env})}
