@@ -428,3 +428,9 @@
 :root[data-theme=dark] :where(.tool-message.success,.success-message,.file-success){color:#BBF7D0;background:#102418;border-color:#2F6B45}
 :where(.progress-track,#image-progress,#jpg-progress,#merge-progress){overflow:hidden;border-radius:999px}
 @media(prefers-reduced-motion:reduce){.calc-results:not([hidden]){animation:none}}
+
+/* Ensure the complete Kitlune wordmark remains legible in dark theme. */
+:root[data-theme="dark"] .brand img,
+:root[data-theme="dark"] .footer-brand img{content:url("/assets/images/logo-dark.svg");}
+:root[data-theme="dark"] .header{background:var(--bg);border-bottom-color:var(--border);}
+:root[data-theme="dark"] .footer{background:var(--surface);border-top-color:var(--border);}
