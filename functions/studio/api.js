@@ -17,7 +17,7 @@ async function authorize(request,env){
   if(String(user.email).trim().toLowerCase()!==allowed)return {response:fail('This account is not allowed.',403)};
   return {user};
 }
-const QUERY=`query StudioAnalytics($zoneTag:String!,$daily:DateRange!, $countryFilter:Filter!, $pageFilter:Filter!){viewer{zones(filter:{zoneTag:$zoneTag}){daily:httpRequests1dGroups(limit:1000,filter:$daily,orderBy:[date_ASC]){dimensions{date}sum{requests pageViews}uniq{uniques}}countries:httpRequests1dGroups(limit:1000,filter:$countryFilter,orderBy:[sum_requests_DESC]){dimensions{clientCountryName}sum{requests}}pages:httpRequests1dGroups(limit:1000,filter:$pageFilter,orderBy:[sum_requests_DESC]){dimensions{clientRequestPath}sum{requests}}}}}`;
+const QUERY=`query StudioAnalytics($zoneTag:string!,$daily:filter!,$countryFilter:filter!,$pageFilter:filter!){viewer{zones(filter:{zoneTag:$zoneTag}){daily:httpRequests1dGroups(limit:1000,filter:$daily,orderBy:[date_ASC]){dimensions{date}sum{requests pageViews}uniq{uniques}}countries:httpRequests1dGroups(limit:1000,filter:$countryFilter,orderBy:[sum_requests_DESC]){dimensions{clientCountryName}sum{requests}}pages:httpRequests1dGroups(limit:1000,filter:$pageFilter,orderBy:[sum_requests_DESC]){dimensions{clientRequestPath}sum{requests}}}}}`;
 export async function onRequestGet({request,env}) {
   const url=new URL(request.url);
   if(url.pathname==='/studio/config')return json({supabaseUrl:env.SUPABASE_URL||'',supabaseAnonKey:env.SUPABASE_ANON_KEY||''});
