@@ -42,5 +42,24 @@
   const year = $('#current-year'); if (year) year.textContent = String(new Date().getFullYear());
   const notice = $('#cookie-notice'); const dismiss = $('#cookie-dismiss'); const cookieSettings = $('#cookie-settings');
   if (notice && dismiss) { dismiss.addEventListener('click', () => { notice.hidden = true; }); cookieSettings?.addEventListener('click', () => { notice.hidden = false; dismiss.focus(); }); }
+  const copyEmail = $('#copy-email');
+  const copyEmailStatus = $('#copy-email-status');
+  if (copyEmail && copyEmailStatus) copyEmail.addEventListener('click', async () => {
+    const email = 'contact@kitlune.site';
+    try {
+      if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(email);
+      else {
+        const temporary = document.createElement('textarea');
+        temporary.value = email; temporary.setAttribute('readonly', '');
+        temporary.style.position = 'fixed'; temporary.style.opacity = '0';
+        document.body.append(temporary); temporary.select();
+        const copied = document.execCommand('copy'); temporary.remove();
+        if (!copied) throw new Error('Copy unavailable');
+      }
+      copyEmailStatus.textContent = 'Email address copied.';
+    } catch (_) {
+      copyEmailStatus.textContent = 'Copy was blocked by your browser. You can select the email address and copy it manually.';
+    }
+  });
   filter();
 })();
