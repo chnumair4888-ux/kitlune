@@ -30,7 +30,7 @@ export async function onRequestGet({request,env}) {
   let response;try{response=await fetch('https://api.cloudflare.com/client/v4/graphql',{method:'POST',headers:{authorization:'Bearer '+env.CF_API_TOKEN,'content-type':'application/json'},body:JSON.stringify({query:QUERY,variables})})}catch{return fail('Cloudflare analytics could not be reached.',502)}
   if(!response.ok)return fail('Cloudflare analytics request failed.',502);
   let body;try{body=await response.json()}catch{return fail('Invalid analytics response.',502)}
-  if(body.errors?.length||!body.data?.viewer?.zones?.[0])return fail('Analytics query failed. Check the Cloudflare token permissions and zone ID.',502);
+  if(body.errors?.length||!body.data?.viewer?.zones?.[0]){return json({error:'Analytics query failed',details:(body.errors||[]).map(e=>e.message||'Unknown GraphQL error')},502);}
   const zone=body.data.viewer.zones[0],daily=zone.daily||[],byDate=new Map(daily.map(x=>[x.dimensions.date,x]));
   const today=new Date();today.setUTCHours(0,0,0,0);const periods={};
   for(const [name,days] of Object.entries({today:0,'7d':6,'30d':29})){let requests=0,pageViews=0,dailyUniqueTotal=0;for(let i=0;i<=days;i++){const d=new Date(today);d.setUTCDate(d.getUTCDate()-i);const row=byDate.get(date(d));if(row){requests+=Number(row.sum?.requests||0);pageViews+=Number(row.sum?.pageViews||0);dailyUniqueTotal+=Number(row.uniq?.uniques||0)}}periods[name]={requests,pageViews,dailyUniqueTotal}}
