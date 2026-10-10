@@ -1,0 +1,8 @@
+(() => {
+'use strict';
+const $=id=>document.getElementById(id),field=$('word-text'),status=$('text-status'),fmt=n=>n.toLocaleString();
+function analyze(text){const t=text.trim(),words=t?(t.match(/[\p{L}\p{N}]+(?:['’][\p{L}\p{N}]+)*/gu)||[]):[],sentences=t?(t.match(/[^.!?…]+[.!?…]+|[^.!?…]+$/gu)||[]).filter(s=>/[\p{L}\p{N}]/u.test(s)).length:0,paragraphs=t?t.split(/\n\s*\n+/u).filter(p=>p.trim().length>0).length:0;return{words:words.length,chars:text.length,noSpaces:text.replace(/\s/gu,'').length,sentences,paragraphs,reading:words.length?Math.max(1,Math.ceil(words.length/200)):0}}
+function update(){const s=analyze(field.value);$('stat-words').textContent=fmt(s.words);$('stat-chars').textContent=fmt(s.chars);$('stat-no-spaces').textContent=fmt(s.noSpaces);$('stat-sentences').textContent=fmt(s.sentences);$('stat-paragraphs').textContent=fmt(s.paragraphs);$('stat-reading').textContent=s.reading+' min';status.textContent=field.value.length?'Live count · '+fmt(s.words)+(s.words===1?' word':' words'):'Ready when you are'}
+async function copyText(){if(!field.value){status.textContent='There is no text to copy yet.';field.focus();return}try{if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(field.value);else{field.focus();field.select();if(!document.execCommand('copy'))throw new Error('Copy unavailable')}status.textContent='Text copied to clipboard.'}catch(_){status.textContent='Copy was blocked by your browser. Select the text and copy it manually.';field.focus();field.select()}}
+field.addEventListener('input',update);$('clear-text').addEventListener('click',()=>{field.value='';update();field.focus()});$('copy-text').addEventListener('click',copyText);update();
+})();
