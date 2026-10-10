@@ -215,3 +215,14 @@
 @media(prefers-reduced-motion:reduce) {
   .tool-card,.visual-item,.benefits article,.btn,.hero-visual * {transition:none!important;animation:none!important}
 }
+
+
+/* Popular shortcuts make the homepage search immediately useful */
+.quick-tools{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:19px}
+.quick-tools>span{margin-right:2px;color:var(--muted);font-size:.72rem;font-weight:700}
+.quick-tools>a{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:6px 10px;border:1px solid var(--border);border-radius:999px;background:color-mix(in srgb,var(--surface) 86%,var(--accent-soft));color:var(--text);font-size:.71rem;font-weight:600;transition:background var(--transition),border-color var(--transition),transform var(--transition)}
+.quick-tools>a span{color:var(--accent);font-size:.82rem}
+.quick-tools>a:hover{transform:translateY(-2px);border-color:var(--accent);background:var(--accent-soft)}
+.quick-tools>a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@media(max-width:760px){.quick-tools{gap:7px}.quick-tools>span{width:100%;margin-bottom:1px}.quick-tools>a{font-size:.69rem;padding:6px 9px}}
+@media(prefers-reduced-motion:reduce){.quick-tools>a{transition:none}}
