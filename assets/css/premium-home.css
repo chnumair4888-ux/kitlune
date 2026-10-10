@@ -80,3 +80,45 @@ body{background:#f7f8f5;color:var(--pi)}.header{background:rgba(250,251,248,.92)
   .premium-tool-card h3{font-size:20px}
   .premium-tool-card p{font-size:15px}
 }
+
+
+/* Dark-mode readability pass: raise contrast on secondary homepage copy and metadata. */
+:root[data-theme="dark"] .premium-hero-copy .eyebrow,
+:root[data-theme="dark"] .workspace-kicker,
+:root[data-theme="dark"] .workspace-status,
+:root[data-theme="dark"] .workspace-arrow,
+:root[data-theme="dark"] .compression-label,
+:root[data-theme="dark"] .compression-label b,
+:root[data-theme="dark"] .premium-section-top .eyebrow,
+:root[data-theme="dark"] .library-count span,
+:root[data-theme="dark"] .premium-tool-card .tool-overline,
+:root[data-theme="dark"] .premium-tool-card .arrow,
+:root[data-theme="dark"] .premium-card-bottom,
+:root[data-theme="dark"] .category-card > small,
+:root[data-theme="dark"] .category-card b,
+:root[data-theme="dark"] .trust-strip small,
+:root[data-theme="dark"] .why-heading > p:last-child,
+:root[data-theme="dark"] .closing .eyebrow,
+:root[data-theme="dark"] .footer-bottom {
+  color: #d5ddd3;
+  opacity: 1;
+}
+:root[data-theme="dark"] .workspace-feature-copy small,
+:root[data-theme="dark"] .compression-label em,
+:root[data-theme="dark"] .library-count strong {
+  color: #c8e8b0;
+  opacity: 1;
+}
+:root[data-theme="dark"] .workspace-status {
+  background: #202820;
+  border-color: #4a5945;
+}
+:root[data-theme="dark"] .premium-tool-card p,
+:root[data-theme="dark"] .category-card p,
+:root[data-theme="dark"] .benefits p,
+:root[data-theme="dark"] .privacy-note,
+:root[data-theme="dark"] .trust-strip small,
+:root[data-theme="dark"] .closing p {
+  color: #d0d7d0;
+  opacity: 1;
+}
