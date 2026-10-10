@@ -419,3 +419,12 @@
 :where(.upload-zone,#upload-zone,#pdf-upload-zone):is(.dragover,.is-dragover){border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 12%,transparent)}
 :where(.tool-card,.category-card,.benefits article):focus-within{outline:2px solid var(--accent);outline-offset:3px}
 @media(prefers-reduced-motion:reduce){:where(.tool-card,.category-card,.benefits article,.tool-workspace,.tool-tip,.result-stat,.result-feature,.btn,.icon-btn){transition:none!important}.tool-card:hover,.category-card:hover,.benefits article:hover{transform:none!important}}
+
+/* File-tool states and gentle result transitions. */
+:where(.upload-zone,.dropzone,#upload-zone,#pdf-upload-zone,#image-upload-zone).dragging{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 14%,transparent)}
+.calc-results:not([hidden]){animation:kitlune-result-in 240ms ease-out both}
+@keyframes kitlune-result-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+:where(.tool-message.success,.success-message,.file-success){color:#166534;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;padding:12px 14px}
+:root[data-theme=dark] :where(.tool-message.success,.success-message,.file-success){color:#BBF7D0;background:#102418;border-color:#2F6B45}
+:where(.progress-track,#image-progress,#jpg-progress,#merge-progress){overflow:hidden;border-radius:999px}
+@media(prefers-reduced-motion:reduce){.calc-results:not([hidden]){animation:none}}
