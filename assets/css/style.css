@@ -391,3 +391,6 @@
 :root[data-theme=dark] .nav>a,:root[data-theme=dark] .footer-col a,:root[data-theme=dark] .footer-bottom,:root[data-theme=dark] .tool-workspace small,:root[data-theme=dark] .prose small{color:#C4C4CC}
 :root[data-theme=dark] .icon-btn,:root[data-theme=dark] input,:root[data-theme=dark] textarea,:root[data-theme=dark] select{border-color:#73737D}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* Use a dedicated high-contrast wordmark when the site theme is dark. */
+:root[data-theme=dark] .brand img,:root[data-theme=dark] .footer-brand img{content:url("data:image/svg+xml,%3Csvg xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27 viewBox%3D%270 0 172 42%27%3E%3Cg fill%3D%27none%27 stroke%3D%27%2523818CF8%27 stroke-width%3D%273.5%27 stroke-linecap%3D%27round%27 stroke-linejoin%3D%27round%27%3E%3Cpath d%3D%27M8 8v26M8 21 24 8M14 16l11 18%27%2F%3E%3C%2Fg%3E%3Ctext x%3D%2736%27 y%3D%2728%27 fill%3D%27%2523F4F4F5%27 font-family%3D%27Inter%2CArial%2Csans-serif%27 font-size%3D%2722%27 font-weight%3D%27700%27 letter-spacing%3D%27-1%27%3EKitlune%3C%2Ftext%3E%3C%2Fsvg%3E")}
