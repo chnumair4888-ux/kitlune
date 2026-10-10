@@ -41,3 +41,26 @@ main .section,.tool-layout,.tool-shell{scroll-margin-top:90px}
 :root[data-theme=dark] .footer :where(p,a,small){color:#c4c4cc}
 @media(max-width:760px){.page-hero{padding:38px 0 27px}.page-hero h1{font-size:clamp(2.1rem,9.5vw,3rem);line-height:1.08;letter-spacing:-.055em}.page-hero .lead{font-size:.98rem;line-height:1.8}.page-hero .wrap{width:calc(100% - 32px)}:where(.tool-card,.tool-panel,.tool-box,.calculator-card,.result-card,.tool-workspace,.panel,.stat-card,.output-card){padding:18px}:where(input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea,select){font-size:16px;min-height:44px}:where(button,.btn){font-size:14px;min-height:44px}.prose{padding-top:30px}}
 @media(max-width:420px){.page-hero h1{font-size:2.05rem}.page-hero .lead{font-size:.94rem}.tool-card h2,.tool-panel h2,.calculator-card h2{font-size:1.2rem}}
+
+
+/* Strong, explicit contrast rules for every tool workspace in both themes. */
+.tool-workspace-section{color:var(--text)}
+.tool-workspace-section .tool-workspace,
+.tool-workspace-section .tool-panel,
+.tool-workspace-section .tool-box,
+.tool-workspace-section .calculator-card,
+.tool-workspace-section .result-card,
+.tool-workspace-section .panel,
+.tool-workspace-section .stat-card,
+.tool-workspace-section .output-card{background:var(--surface);color:var(--text);border-color:var(--border)}
+.tool-workspace-section :where(h1,h2,h3,h4,legend,label,strong,b,dt,dd,output){color:var(--text)}
+.tool-workspace-section :where(p,small,li,.muted,.subtle,.help-text,.field-label,.form-label,.tool-description,.result-label,.stat-label,.text-status){color:var(--muted)}
+.tool-workspace-section :where(input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea,select){background:var(--surface);color:var(--text);border:1px solid var(--border)}
+.tool-workspace-section :where(input,textarea,select)::placeholder{color:var(--muted);opacity:1}
+:root[data-theme=dark] .tool-workspace-section{color:#f4f4f5}
+:root[data-theme=dark] .tool-workspace-section :where(h1,h2,h3,h4,legend,label,strong,b,dt,dd,output){color:#f4f4f5}
+:root[data-theme=dark] .tool-workspace-section :where(p,small,li,.muted,.subtle,.help-text,.field-label,.form-label,.tool-description,.result-label,.stat-label,.text-status){color:#c4c4cc}
+:root[data-theme=dark] .tool-workspace-section :where(.tool-workspace,.tool-panel,.tool-box,.calculator-card,.result-card,.panel,.stat-card,.output-card,.upload-zone,.dropzone,.tool-result,.result-panel,.result-summary){background:#18181b;color:#f4f4f5;border-color:#52525b}
+:root[data-theme=dark] .tool-workspace-section :where(input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea,select){background:#111113;color:#f4f4f5;border-color:#62626b}
+:root[data-theme=dark] .tool-workspace-section :where(input,textarea,select)::placeholder{color:#b4b4bd;opacity:1}
+:root[data-theme=dark] .tool-workspace-section :where(.tool-result,.result-panel,.result-summary) :where(h1,h2,h3,h4,p,small,span,strong,b,label,output){color:inherit}
