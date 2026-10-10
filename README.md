@@ -14,4 +14,4 @@ Canonical and Open Graph URLs use `https://kitlune.site`.
 Ad placements are empty placeholders. No AdSense script is installed. Add ads only after approval, and update privacy and consent disclosures before enabling advertising cookies.
 
 ## Phase status
-The seven tool cards are navigation previews for future phases; their processing pages are not included in Phase 1.
+Phase 2 adds a browser-based Image Compressor (JPG, PNG, WebP input; JPEG, PNG or WebP output) and a live Word Counter. The next phases will add PDF tools, financial calculators and SEO files.
