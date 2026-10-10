@@ -17,7 +17,7 @@ async function authorize(request,env){
   if(String(user.email).trim().toLowerCase()!==allowed)return {response:fail('This account is not allowed.',403)};
   return {user};
 }
-const QUERY=`query StudioAnalytics($zoneTag:string!,$start:Date!,$end:Date!){viewer{zones(filter:{zoneTag:$zoneTag}){daily:httpRequests1dGroups(limit:1000,filter:{date_geq:$start,date_lt:$end},orderBy:[date_ASC]){dimensions{date}sum{requests pageViews}uniq{uniques}}countries:httpRequests1dGroups(limit:1000,filter:{date_geq:$start,date_lt:$end},orderBy:[sum_requests_DESC]){dimensions{clientCountryName}sum{requests}}pages:httpRequests1dGroups(limit:1000,filter:{date_geq:$start,date_lt:$end},orderBy:[sum_requests_DESC]){dimensions{clientRequestPath}sum{requests}}}}}`;
+const QUERY=`query StudioAnalytics($zoneTag:string!,$start:Date!,$end:Date!){viewer{zones(filter:{zoneTag:$zoneTag}){daily:httpRequests1dGroups(limit:1000,filter:{date_geq:$start,date_leq:$end},orderBy:[date_ASC]){dimensions{date}sum{requests pageViews}uniq{uniques}}countries:httpRequests1dGroups(limit:1000,filter:{date_geq:$start,date_leq:$end},orderBy:[sum_requests_DESC]){dimensions{clientCountryName}sum{requests}}pages:httpRequests1dGroups(limit:1000,filter:{date_geq:$start,date_leq:$end},orderBy:[sum_requests_DESC]){dimensions{clientRequestPath}sum{requests}}}}}`;
 export async function onRequestGet({request,env}) {
   const url=new URL(request.url);
   if(url.pathname==='/studio/config')return json({supabaseUrl:env.SUPABASE_URL||'',supabaseAnonKey:env.SUPABASE_ANON_KEY||''});
@@ -26,7 +26,7 @@ export async function onRequestGet({request,env}) {
   if(!env.CF_API_TOKEN||!env.CF_ZONE_ID)return fail('Analytics secrets are not configured.',503);
   const now=new Date(),start=new Date(now);start.setUTCDate(start.getUTCDate()-29);
   const date=(d)=>d.toISOString().slice(0,10);
-  const variables={zoneTag:env.CF_ZONE_ID,start:date(start),end:date(new Date(now.getTime()+86400000))};
+  const variables={zoneTag:env.CF_ZONE_ID,start:date(start),end:date(now)};
   let response;try{response=await fetch('https://api.cloudflare.com/client/v4/graphql',{method:'POST',headers:{authorization:'Bearer '+env.CF_API_TOKEN,'content-type':'application/json'},body:JSON.stringify({query:QUERY,variables})})}catch{return fail('Cloudflare analytics could not be reached.',502)}
   if(!response.ok)return fail('Cloudflare analytics request failed.',502);
   let body;try{body=await response.json()}catch{return fail('Invalid analytics response.',502)}
