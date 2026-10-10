@@ -14,4 +14,4 @@ Canonical and Open Graph URLs use `https://kitlune.site`.
 Ad placements are empty placeholders. No AdSense script is installed. Add ads only after approval, and update privacy and consent disclosures before enabling advertising cookies.
 
 ## Phase status
-Phase 2 adds a browser-based Image Compressor (JPG, PNG, WebP input; JPEG, PNG or WebP output) and a live Word Counter. Phase 3 adds JPG/PNG-to-PDF conversion and PDF merging, using browser-side PDF processing. The next phase adds financial calculators; the final phase adds SEO files.
+Phase 2 adds a browser-based Image Compressor (JPG, PNG, WebP input; JPEG, PNG or WebP output) and a live Word Counter. Phase 3 adds JPG/PNG-to-PDF conversion and PDF merging, using browser-side PDF processing. Phase 4 adds a loan/EMI calculator, compound interest calculator and savings goal planner with currency selection. The final phase adds sitemap, robots.txt, metadata review and structured data.
