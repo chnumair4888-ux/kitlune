@@ -13,7 +13,12 @@
     if (meta) meta.content = theme === 'dark' ? '#0F0F10' : '#FAFAF8';
     if (button) { const next = theme === 'dark' ? 'light' : 'dark'; button.setAttribute('aria-label', `Switch to ${next} mode`); button.title = `Switch to ${next} mode`; }
   }
-  setTheme(saved() || (media.matches ? 'dark' : 'light'));
+  function syncTheme() { setTheme(saved() || (media.matches ? 'dark' : 'light')); }
+  syncTheme();
+  // Back/forward cache can restore an old page without rerunning deferred scripts.
+  window.addEventListener('pageshow', syncTheme);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) syncTheme(); });
+  window.addEventListener('storage', event => { if (event.key === key) syncTheme(); });
   if (button) button.addEventListener('click', () => { const next = root.dataset.theme === 'dark' ? 'light' : 'dark'; setTheme(next); try { localStorage.setItem(key, next); } catch (_) {} });
   if (media.addEventListener) media.addEventListener('change', e => { if (!saved()) setTheme(e.matches ? 'dark' : 'light'); });
 })();
