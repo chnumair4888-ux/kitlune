@@ -30,7 +30,40 @@
   const initialCategory = new URLSearchParams(location.search).get('category');
   if (initialCategory === 'file' || initialCategory === 'finance') setCategory(initialCategory);
   $('#reset-search')?.addEventListener('click', () => { if (input) input.value = ''; const url = new URL(location.href); url.searchParams.delete('q'); history.replaceState({}, '', url); setCategory('all'); input?.focus(); });
-  const menuButton = $('#menu-toggle'); const nav = $('#nav');
+
+  // Keep Guides discoverable across existing pages without changing tool behavior.
+  const nav = $('#nav');
+  if (nav && !nav.querySelector('a[href="/blog/"]')) {
+    const guideLink = document.createElement('a');
+    guideLink.href = '/blog/'; guideLink.textContent = 'Guides';
+    const about = nav.querySelector('a[href="/about/"]');
+    nav.insertBefore(guideLink, about || nav.firstChild);
+  }
+  document.querySelectorAll('.footer-col').forEach(col => {
+    if (/explore/i.test(col.querySelector('h2')?.textContent || '') && !col.querySelector('a[href="/blog/"]')) {
+      const link = document.createElement('a'); link.href = '/blog/'; link.textContent = 'Guides'; col.append(link);
+    }
+  });
+  const guideMap = {
+    '/image-compressor/': ['/blog/compress-image-to-100kb-on-phone/', 'Guide: compress an image to about 100 KB on your phone'],
+    '/word-counter/': ['/blog/word-count-reading-time-essays/', 'Guide: count words and estimate reading time for essays'],
+    '/jpg-to-pdf/': ['/blog/jpg-photos-to-one-pdf/', 'Guide: turn JPG photos into one PDF'],
+    '/merge-pdf/': ['/blog/merge-pdf-on-phone/', 'Guide: merge PDF files on your phone'],
+    '/loan-calculator/': ['/blog/how-emi-is-calculated/', 'Guide: how EMI is calculated with a worked example'],
+    '/compound-interest/': ['/blog/compound-interest-explained/', 'Guide: compound interest explained with numbers'],
+    '/savings-goal/': ['/blog/compound-interest-explained/', 'Guide: understand compound growth before planning a savings goal']
+  };
+  const mappedGuide = guideMap[location.pathname];
+  const prose = document.querySelector('.tool-guide .prose');
+  if (mappedGuide && prose && !prose.querySelector(`a[href="${mappedGuide[0]}"]`)) {
+    const p = document.createElement('p');
+    p.className = 'tool-related-guide';
+    const strong = document.createElement('strong'); strong.textContent = 'Helpful guide: ';
+    const link = document.createElement('a'); link.href = mappedGuide[0]; link.textContent = mappedGuide[1].replace(/^Guide: /, '');
+    p.append(strong, link); prose.append(p);
+  }
+
+  const menuButton = $('#menu-toggle');
   function closeMenu() { nav?.classList.remove('open'); menuButton?.setAttribute('aria-expanded', 'false'); menuButton?.setAttribute('aria-label', 'Open navigation'); }
   if (menuButton && nav) {
     menuButton.addEventListener('click', () => { const open = nav.classList.toggle('open'); menuButton.setAttribute('aria-expanded', String(open)); menuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation'); });
