@@ -1,6 +1,21 @@
 (() => {
   'use strict';
   const $ = (s, r = document) => r.querySelector(s);
+
+  const homeGrid = $('#tool-grid');
+  if(homeGrid && !homeGrid.querySelector('a[href="/scan-to-pdf/"]')){
+    const scanCard=document.createElement('a');
+    scanCard.href='/scan-to-pdf/';
+    scanCard.className='tool-card tool-card-link premium-tool-card';
+    scanCard.dataset.category='file';
+    scanCard.dataset.search='scan to pdf document scanner camera photos notes receipts enhance crop rotate pdf';
+    scanCard.innerHTML='<div class="premium-card-meta"><span class="premium-tool-symbol symbol-rose"><svg viewBox="0 0 24 24"><path d="M5 3H3v5M19 3h2v5M5 21H3v-5M19 21h2v-5"/><rect x="6" y="5" width="12" height="14" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg></span><span class="arrow">↗</span></div><span class="tool-overline">DOCUMENTS</span><h3>Scan to PDF</h3><p>Scan paper pages, clean them up and save one private PDF.</p><span class="premium-card-bottom"><span>Open tool</span><span>↗</span></span>';
+    const jpgCard=homeGrid.querySelector('a[href="/jpg-to-pdf/"]');
+    if(jpgCard) jpgCard.before(scanCard); else homeGrid.append(scanCard);
+    document.querySelectorAll('.library-count strong').forEach(el=>el.textContent='08');
+    document.querySelectorAll('.filter[data-filter="all"] span').forEach(el=>el.textContent='08');
+  }
+
   const cards = Array.from(document.querySelectorAll('.tool-card[data-category]'));
   const input = $('#tool-search'), form = $('#tool-search-form'), tabs = Array.from(document.querySelectorAll('.filter[data-filter]')), empty = $('#empty-state'), status = $('#search-status');
   let category = 'all';
@@ -17,6 +32,7 @@
   const guideMap={
     '/image-compressor/':[['/blog/compress-image-to-100kb-on-phone/','Compress an image to about 100 KB on your phone'],['/blog/jpg-vs-png-vs-webp/','JPG vs PNG vs WebP: which format to use']],
     '/word-counter/':[['/blog/word-count-reading-time-essays/','Count words and estimate reading time for essays'],['/blog/check-word-limits-essays-applications/','Check word limits for essays and applications']],
+    '/scan-to-pdf/':[['/blog/scan-documents-phone-clean-pdf/','Scan documents with your phone and make a clean PDF']],
     '/jpg-to-pdf/':[['/blog/jpg-photos-to-one-pdf/','Turn JPG photos into one PDF'],['/blog/scan-documents-phone-clean-pdf/','Scan documents with your phone and make a clean PDF']],
     '/merge-pdf/':[['/blog/merge-pdf-on-phone/','Merge PDF files on your phone']],
     '/loan-calculator/':[['/blog/how-emi-is-calculated/','How EMI is calculated with a worked example'],['/blog/longer-loan-term-total-interest/','How a longer loan term changes total interest']],
@@ -35,7 +51,7 @@
     '/blog/word-count-reading-time-essays/':['/word-counter/','Word Counter'],
     '/blog/jpg-photos-to-one-pdf/':['/jpg-to-pdf/','JPG to PDF'],
     '/blog/jpg-vs-png-vs-webp/':['/image-compressor/','Image Compressor'],
-    '/blog/scan-documents-phone-clean-pdf/':['/jpg-to-pdf/','JPG to PDF'],
+    '/blog/scan-documents-phone-clean-pdf/':['/scan-to-pdf/','Scan to PDF'],
     '/blog/longer-loan-term-total-interest/':['/loan-calculator/','Loan / EMI Calculator'],
     '/blog/plan-savings-goal-monthly-deposits/':['/savings-goal/','Savings Goal Calculator'],
     '/blog/rule-of-72-explained/':['/compound-interest/','Compound Interest Calculator'],
